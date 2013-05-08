@@ -6,7 +6,7 @@ exports.photonLogger = function() {
     }
 
     return function(req, res, next) {
-        var address = req.headers['X-Forwarded-For'] || req.socket.remoteAddress;
+        var address = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 
         console.log('REQUEST ' + address + ': ' + req.method + ' ' + req.url + (req.method === 'POST' ? ' : ' + getFields(req.body).join(',') : ''));
         next();
