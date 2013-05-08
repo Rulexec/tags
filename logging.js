@@ -6,7 +6,9 @@ exports.photonLogger = function() {
     }
 
     return function(req, res, next) {
-        console.log('REQUEST ' + req.socket.remoteAddress + ': ' + req.method + ' ' + req.url + (req.method === 'POST' ? ' : ' + getFields(req.body).join(',') : ''));
+        var address = req.headers['X-Forwarded-For'] || req.socket.remoteAddress;
+
+        console.log('REQUEST ' + address + ': ' + req.method + ' ' + req.url + (req.method === 'POST' ? ' : ' + getFields(req.body).join(',') : ''));
         next();
     };
 };
