@@ -1,0 +1,23 @@
+#user-block {
+    position: absolute;
+    top: 0px;
+    right: 0.5em;
+    padding: 1em;
+}
+
+#footer {
+    position: absolute;
+    bottom: 0px;
+    left: 0.5em;
+    padding: 0.5em;
+}
+.communa-color {
+    color: #8E1816;
+}
+a.communa-color:hover {
+    color: #4D0908;
+}
+
+.span3.next-row {
+    margin-left: 0px;
+}

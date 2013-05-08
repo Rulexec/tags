@@ -1,0 +1,35 @@
+{% extends 'main.html' %}
+
+{% block title %}&lt;теги&gt;*{% endblock %}
+
+{% block head -%}
+<script>{% include 'index.js' %}</script>
+<style>{% include 'index.css' %}</style>
+{%- endblock %}
+
+{% block body -%}
+
+<div id='user-block' class='muted'>
+{%- if logined -%}
+  <a href='/me'>Профиль</a> | <a href='/log/out'>Выйти</a>
+{%- else -%}
+  <a href='/log/in'>Войти</a> | <a href='/join'>Регистрация</a>
+{%- endif -%}
+</div>
+
+<div id='block'>
+  <div>Теги: <span class='muted'><i>(через запятую)</i></a></div>
+  <div class='input-append' style='margin-bottom: 0px; width:100%; text-align: center;'>
+    <form action='/find' method='post' style='margin-bottom: 0px;'>
+      <input id='tags' name='find' type='text' autocomplete='off' style='width:85%;'>
+      <button class='btn' type='submit' style='width:15%;'>Найти!</button>
+    </form>
+  </div>
+  <div style='text-align: right;' class='muted'>Например: <a id='example' href='#'>{{ example | join(', ') }}</a></div>
+</div>
+
+<div id='footer' class='muted'>
+  Разработано в <a href='http://com.muna.by/landing/project?tags' class='communa-color'>Коммуне</a>
+</div>
+
+{%- endblock %}

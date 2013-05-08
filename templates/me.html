@@ -1,0 +1,92 @@
+{% extends 'main.html' %}
+
+{% block title %}Я — &lt;теги&gt;*{% endblock %}
+
+{% block head %}<style>{% include 'me.css' %}</style>
+<script>
+$(function() {
+    $('#passwordUpdatedClose').click(function() {
+        $('#passwordUpdated').hide();
+        window.history.replaceState(null, null, '/me');
+    });
+});
+</script>
+{%- endblock %}
+
+{% block body -%}
+
+<div id='user-block'>
+{%- if logined or not viewing -%}
+  <p><a href='/'>К поиску</a> | <a href='/log/out'>Выйти</a></p>
+  <p><a href='/me/profile'>Редактировать профиль</a></p>
+  {%- if user.canChangePassword -%}<p><a href='/me/password'>Изменить пароль</a></p>{%- endif -%}
+{%- else -%}
+  <a href='/'>К поиску</a> | <a href='/log/in'>Войти</a> | <a href='/join'>Регистрация</a>
+{%- endif -%}
+</div>
+
+<div class='container-fluid' style='margin-top: 2em;'>
+  <div class='row-fluid'>
+    <div class='span6 offset3'>
+      <div class='clearfix'>
+        <h1 class='pull-left'>{% if user.name %}{{ user.name | escape }}{% else %}Инкогнито{% endif %}</h1>
+        <p class='pull-right muted' style='margin-top: 1.7em;'>[dev] id: {{ user.id }}</p>
+      </div>
+{%- if passwordUpdated -%}
+      <div class='row-fluid' id='passwordUpdated'>
+        <div class='well'>
+          <p class='pull-left'>Пароль обновлён!</p>
+          <p class='pull-right'><a id='passwordUpdatedClose' style='color: gray; cursor: pointer;'><i class='icon-remove'></i> <i>закрыть уведомление</i></a></p>
+        </div>
+      </div>
+{%- endif -%}
+{%- if user.info and user.show_email -%}
+      <div class='row-fluid'>
+        <div class='span6'>
+          <p>Информация:</p>
+          <div class='well'>{{ user.info | escape }}</div>
+        </div>
+        <div class='span6'>
+          <p>email: <a href='mailto:{{ user.email | escape }}'>{{ user.email | escape }}</a></p>
+        </div>
+      </div>
+{%- elif user.info or user.show_email -%}
+      <div class='row-fluid'>
+{%- if user.info -%}
+        <div class='span12'>
+          <p>Информация:</p>
+          <div class='well'>{{ user.info | escape }}</div>
+        </div>
+{%- else -%}
+        <div class='span12'>
+          <p>email: <a href='mailto:{{ user.email | escape }}'>{{ user.email | escape }}</a></p>
+        </div>
+{%- endif -%}
+      </div>
+{%- endif -%}
+      <p>Теги:</p>
+      <div>
+{%- for tag in user.tags -%}
+<span class='label label-info' style='margin: 0 1em 1em 0;'>{{ tag }}{% if not viewing %} <form style='display: inline;'><button class='btn btn-link btn-mini' style='padding: 0px;' type='submit' formaction='/me/{{ tag }}/delete' formmethod='post'><i class='icon-remove icon-white'></i></button></form>{% endif %}</span>
+{%- endfor -%}
+      </div>
+
+{%- if not viewing -%}
+      <form action='/me/tags' method='post'>
+        <div class='input-append'>
+          <input class='input-xlarge' name='tags' type='text' autocomplete='off' placeholder='Через запятую'>
+          <input type='submit' class='btn' value='Добавить тегов'>
+        </div>
+      </form>
+{%- endif -%}
+
+      <p{% if viewing %} style='margin-top: 3em;'{% endif %}>Долой теги, <a href='/'>я хочу искать!</a></p>
+    </div>
+  </div>
+</div>
+
+<div id='footer' class='muted'>
+  Разработано в <a href='http://com.muna.by/landing/project?tags' class='communa-color'>Коммуне</a>
+</div>
+
+{%- endblock %}

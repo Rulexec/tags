@@ -1,0 +1,29 @@
+#to-main {
+    position: absolute;
+    top: 0px;
+    left: 0.3em;
+    padding: 0.3em;
+}
+
+.auth-by {
+    width: 78px;
+    height: 78px;
+    padding: 10px;
+    opacity: 0.05;
+}
+.inline-block {
+    display: inline-block;
+}
+
+#footer {
+    position: absolute;
+    bottom: 0px;
+    right: 0.5em;
+    padding: 0.5em;
+}
+.communa-color {
+    color: #8E1816;
+}
+a.communa-color:hover {
+    color: #4D0908;
+}

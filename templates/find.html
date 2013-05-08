@@ -1,0 +1,79 @@
+{% extends 'main.html' %}
+
+{% block title %}Поиск — &lt;теги&gt;*{% endblock %}
+
+{% block head %}<style>{% include 'find.css' %}</style>{% endblock %}
+
+{% macro morphEnd(n) -%}
+{%- set lastDigit = n % 10 -%}
+{%- set twoLastDigits = n % 100 -%}
+
+{%- if lastDigit >= 5 -%}
+  ий
+{%- else -%}
+  {%- if twoLastDigits >= 11 and twoLastDigits <= 20 -%}
+    ий
+  {%- else -%}
+    {%- if twoLastDigits == 1 -%}
+      ие
+    {%- else -%}
+      ия
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- endmacro %}
+
+{% block body -%}
+
+{% macro card(result) -%}
+<a href='/person/{{ result.id }}' style='color: inherit; text-decoration: none;'>
+  <div class='well' style='min-height: 64px;'>
+    <div style='width: 64px; height: 64px; position: absolute; background: lightgray;'></div>
+    <div style='margin-left: 75px;'>
+      <p><i class='icon-user'></i> {% if result.name %}{{ result.name | escape }}{% else %}Инкогнито{% endif %}</p>
+      <p>{% for tag in result.tags %}<span class='label'>{{ tag | escape }}</span> {% endfor %}{% if result.count > 6 %}<span class='label'>…</span>{% endif %}</p>
+    </div>
+  </div>
+</a>
+{%- endmacro %}
+
+<div id='user-block' class='muted'>
+  <a href='/'>На главную</a> |&nbsp;
+{%- if logined -%}
+  <a href='/me'>Профиль</a> | <a href='/log/out'>Выйти</a>
+{%- else -%}
+  <a href='/log/in'>Войти</a> | <a href='/join'>Регистрация</a>
+{%- endif -%}
+</div>
+
+<div class='container-fluid' style='margin-top: 2em;'>
+  <div class='row-fluid'>
+    <form action='/find' method='post' class='input-append'>
+      <input name='find' type='text' class='input-xxlarge' value='{{ search | join(', ') | escape }}' autocomplete='off'>
+      <input type='submit' class='btn' value='Искать'>
+    </form>
+  </div>
+  <div class='row-fluid'>
+{%- if count > 0 -%}
+    <p>Найдено {{ count }} совпаден{{ morphEnd(count) }}:</p>
+    <div class='row-fluid'>
+{%- for result in results -%}
+<div class='span4{% if loop.index0 % 3 == 0 %} next-row{% endif %}'>{{ card(result) }}</div>
+{%- endfor -%}
+    </div>
+{%- else -%}
+    <div class='span6'>
+      <p>Извините, но совпадений не найдено.</p>
+      {%- if search.length > 1 %}<p>Вы можете попробовать расширить круг поиска удалив один из тегов из запроса.</p>{% endif -%}
+      <p class='well' style='margin-top: 3em;'>Если вы заинтересованы в этих тегах, {% if logined %}<a href='/me'>добавьте их себе</a>{% else %}<a href='/join'>зарегистрируйтесь</a> (это займёт 20 секунд) и добавьте их себе {% endif %} и тогда следующие, кто будут искать найдут вас и возможно свяжутся с вами. Так и должно быть.</p>
+    </div>
+{%- endif -%}
+  </div>
+</div>
+
+<div id='footer' class='muted'>
+  Разработано в <a href='http://com.muna.by/landing/project?tags' class='communa-color'>Коммуне</a>
+</div>
+
+{%- endblock %}

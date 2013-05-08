@@ -1,0 +1,23 @@
+{
+  "name": "tags",
+  "description": "Tag all world!",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.2.x"
+  },
+  "dependencies": {
+    "pg": "1.1.x",
+
+    "photon": ">= 0.6.1",
+    "send": "0.1.x",
+
+    "validator": "1.1.x",
+    "nodemailer": "0.4.x",
+
+    "nunjucks": "0.1.x",
+
+    "async": "0.2.x"
+  }
+}

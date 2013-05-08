@@ -1,0 +1,44 @@
+{% extends 'main.html' %}
+
+{% block title %}&lt;теги&gt;*{% endblock %}
+
+{% block head %}<style>
+#user-block {
+    position: absolute;
+    top: 0px;
+    right: 0.5em;
+    padding: 1em;
+}
+#footer {
+    position: absolute;
+    bottom: 0px;
+    left: 0.5em;
+    padding: 0.5em;
+}
+.communa-color {
+    color: #8E1816;
+}
+a.communa-color:hover {
+    color: #4D0908;
+}
+</style>{% endblock %}
+
+{% block body -%}
+
+<div id='user-block'>
+  <a href='/'>На главную</a>
+</div>
+
+<div style='width: 100%; text-align: center; position: absolute; top: 40%;'>
+  <form action='/log/in' method='post'>
+    <p><input name='email' type='email' class='span3' placeholder='email'></p>
+    <p><input name='password' type='password' class='span3' placeholder='Пароль'></p>
+    <p><input class='btn span3' type='submit' value='Войти'></p>
+  </form>
+</div>
+
+<div id='footer' class='muted'>
+  Разработано в <a href='http://com.muna.by/landing/project?tags' class='communa-color'>Коммуне</a>
+</div>
+
+{%- endblock %}
