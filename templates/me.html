@@ -30,7 +30,6 @@ $(function() {
     <div class='span6 offset3'>
       <div class='clearfix'>
         <h1 class='pull-left'>{% if user.name %}{{ user.name | escape }}{% else %}Инкогнито{% endif %}</h1>
-        <p class='pull-right muted' style='margin-top: 1.7em;'>[dev] id: {{ user.id }}</p>
       </div>
 {%- if passwordUpdated -%}
       <div class='row-fluid' id='passwordUpdated'>
