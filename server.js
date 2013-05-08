@@ -353,5 +353,6 @@ function authFailed(req, res, error) {
 }
 
 app.listen(options.port);
+logging.systemState('web server listening at ' + options.port.toString());
 
 };

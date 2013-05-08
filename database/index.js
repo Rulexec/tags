@@ -2,6 +2,8 @@ var pg = require('pg').native,
     async = require('async'),
     crypto = require('crypto'),
 
+    logging = require('../logging'),
+
     CONFIG = require('../config'),
     sql = require('./sql');
 
@@ -15,6 +17,8 @@ function DB() {
     this.client = new pg.Client(pgConnectionString);
 
     this.start = function(callback) {
+        logging.systemState('connecting to db');
+
         async.series([
             async.apply(sql.start),
             async.apply(self.client.connect.bind(self.client)),
@@ -28,6 +32,7 @@ function DB() {
                         createDB(callback);
                     } else {
                         // check version/migrate
+                        logging.systemState('connected to db');
                         callback();
                     }
                 }
@@ -36,6 +41,7 @@ function DB() {
     }
 
     function createDB(callback) {
+        logging.systemState('creating db');
         self.client.query(sql.getQuery('create db'), callback);
     }
 

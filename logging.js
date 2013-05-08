@@ -22,4 +22,8 @@ exports.tagIntersect = function(tags, resultCount) {
     console.log('TAG_INTERSECT: ' + tags.join(',') + ' (' + resultCount.toString() + ')');
 };
 
+exports.systemState = function(state) {
+    console.log('SYSTEM: ' + state);
+};
+
 exports.error = require('./util').error;

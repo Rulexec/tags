@@ -19,6 +19,8 @@ async.series([
         process.exit(1);
     }
 
+    logging.systemState('starting web server');
+
     server.start({
         db: db,
         host: CONFIG.HOST,
