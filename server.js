@@ -59,6 +59,7 @@ var app = photon(
 app.routeStatic({
     '/': authProvide(index),
     '/favicon.ico': awsFile('favicon.ico'),
+    '/robots.txt': page('robots.txt', {}, {mime: 'text/plain'}),
 
     '/find': {
         'POST': findRequestPrepare

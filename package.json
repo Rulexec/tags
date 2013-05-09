@@ -10,7 +10,7 @@
   "dependencies": {
     "pg": "1.1.x",
 
-    "photon": ">= 0.6.1",
+    "photon": "0.7.x",
     "send": "0.1.x",
 
     "validator": "1.1.x",

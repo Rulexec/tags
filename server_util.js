@@ -18,13 +18,17 @@ exports.staticFile = function(file) {
 };
 
 var ETag;
-exports.page = function(name, args) {
+exports.page = function(name, args, options) {
+    !options && (options = {});
+
     var data = template.render(name, args);
     var createdDate = new Date().toUTCString();
     var maxAge = 18 * 60 * 60;
     var maxAgeHeader = 'public, max-age=' + maxAge.toString();
   
     return function(req, res) {
+        options.mime && res.mime(options.mime);
+
         if (!res.getHeader('ETag')) res.setHeader('ETag', ETag);
         if (!res.getHeader('Date')) res.setHeader('Date', new Date().toUTCString());
         if (!res.getHeader('Cache-Control')) res.setHeader('Cache-Control', maxAgeHeader);
@@ -33,8 +37,10 @@ exports.page = function(name, args) {
         res.end(data);
     };
 };
-exports._pageLocal = function(name, args) {
+exports._pageLocal = function(name, args, options) {
+    !options && (options = {});
     return function(req, res) {
+        options.mime && res.mime(options.mime);
         res.end(template._renderLocal(name, args));
     };
 };
